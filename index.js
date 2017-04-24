@@ -1,27 +1,19 @@
 var hsl = require('float-hsl2rgb')
 
-window.addEventListener("deviceorientation", handleOrientation, true)
+// window.addEventListener("deviceorientation", handleOrientation, true)
+window.addEventListener('devicemotion', handleOrientation, true)
 
 var prevOrientation = null
+
 function handleOrientation (event) {
   var absolute = event.absolute
-  var roll     = event.alpha
-  var pitch    = event.beta
-  var yaw      = event.gamma
+  var x    = event.acceleration.x
+  var y    = event.acceleration.y
+  var z    = event.acceleration.z
 
-  // Convert to relative
-  if (absolute) {
-    if (!prevOrientation) {
-      roll = pitch = yaw = 0
-    } else {
-      roll = roll - prevOrientation[0]
-      pitch = pitch - prevOrientation[1]
-      yaw = yaw - prevOrientation[2]
-    }
-    prevOrientation = [roll, pitch, yaw]
-  }
+  var dist = Math.sqrt(x*x + y*y + z*z)
 
-  console.log(absolute, roll, pitch, yaw)
+  checkLose(dist)
 }
 
 document.body.style.margin = 0
@@ -42,3 +34,10 @@ setInterval(function () {
   ctx.fillStyle = 'rgb(' + rgb.join(',') + ')'
   ctx.fillRect(0, 0, window.innerWidth, window.innerHeight)
 }, 50)
+
+function checkLose (force) {
+  if (force > 10) {
+    console.log('you lose')
+  }
+}
+
