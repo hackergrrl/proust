@@ -1,3 +1,5 @@
+var hsl = require('float-hsl2rgb')
+
 window.addEventListener("deviceorientation", handleOrientation, true)
 
 function handleOrientation (event) {
@@ -6,6 +8,7 @@ function handleOrientation (event) {
   var beta     = event.beta
   var gamma    = event.gamma
 
+  console.log(absolute, alpha, beta, gamma)
   // ...
 }
 
@@ -18,5 +21,12 @@ canvas.height = window.innerHeight
 document.body.appendChild(canvas)
 
 var ctx = canvas.getContext('2d')
-ctx.fillStyle = 'pink'
-ctx.fillRect(0, 0, window.innerWidth, window.innerHeight)
+
+var hue = Math.random()
+
+setInterval(function () {
+  var brightness = Math.sin(new Date().getTime() / 800) * 0.1 + 0.6
+  var rgb = hsl([hue, 0.5, brightness]).map(function (v) { return Math.round(v * 255) })
+  ctx.fillStyle = 'rgb(' + rgb.join(',') + ')'
+  ctx.fillRect(0, 0, window.innerWidth, window.innerHeight)
+}, 50)
