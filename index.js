@@ -37,7 +37,14 @@ setInterval(function () {
 
 function checkLose (force) {
   if (force > 10) {
-    console.log('you lose')
+    document.body.removeChild(canvas)
+    var p = document.createElement('p')
+    p.innerText = quotes[Math.round(Math.random() * quotes.length)]
+    var rgb = hsl([hue, 0.5, 0.75]).map(function (v) { return Math.round(v * 255) })
+    document.body.style.background = 'rgb(' + rgb.join(',') + ')'
+    p.style.color = '#ffffff'
+    p.style['font-size'] = '2em'
+    document.body.appendChild(p)
   }
 }
 

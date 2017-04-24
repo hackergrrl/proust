@@ -18,8 +18,8 @@
     "float-hsl2rgb": "^1.0.2"
   },
   "devDependencies": {
-    "tape": "~4.6.2",
-    "standard": "~10.0.0"
+    "brfs": "^1.4.3",
+    "browserify": "^14.1.0"
   },
   "license": "ISC"
 }
