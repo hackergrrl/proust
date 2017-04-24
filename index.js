@@ -1,6 +1,7 @@
 var hsl = require('float-hsl2rgb')
 
-// window.addEventListener("deviceorientation", handleOrientation, true)
+var quotes = require('fs').readFileSync('./quotes.txt', 'utf8').split('\n')
+
 window.addEventListener('devicemotion', handleOrientation, true)
 
 var prevOrientation = null
@@ -19,16 +20,28 @@ function handleOrientation (event) {
 document.body.style.margin = 0
 document.body.style.overflow = 'hidden'
 
-var canvas = document.createElement('canvas')
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
-document.body.appendChild(canvas)
+var quote
+var canvas
+var ctx
+var hue
 
-var ctx = canvas.getContext('2d')
+function init () {
+  if (quote) {
+    document.body.removeChild(quote)
+    quote = null
+  }
 
-var hue = Math.random()
+  canvas = document.createElement('canvas')
+  canvas.width = window.innerWidth
+  canvas.height = window.innerHeight
+  document.body.appendChild(canvas)
+  ctx = canvas.getContext('2d')
+  hue = Math.random()
+}
 
 setInterval(function () {
+  if (!canvas) return
+
   var brightness = Math.sin(new Date().getTime() / 800) * 0.1 + 0.6
   var rgb = hsl([hue, 0.5, brightness]).map(function (v) { return Math.round(v * 255) })
   ctx.fillStyle = 'rgb(' + rgb.join(',') + ')'
@@ -38,13 +51,18 @@ setInterval(function () {
 function checkLose (force) {
   if (force > 10) {
     document.body.removeChild(canvas)
-    var p = document.createElement('p')
-    p.innerText = quotes[Math.round(Math.random() * quotes.length)]
+
     var rgb = hsl([hue, 0.5, 0.75]).map(function (v) { return Math.round(v * 255) })
     document.body.style.background = 'rgb(' + rgb.join(',') + ')'
-    p.style.color = '#ffffff'
-    p.style['font-size'] = '2em'
-    document.body.appendChild(p)
+
+    quote = document.createElement('quote')
+    quote.innerText = quotes[Math.round(Math.random() * quotes.length)]
+    quote.style.color = '#ffffff'
+    quote.style['font-size'] = '4em'
+    document.body.appendChild(quote)
+
+    document.onclick = init
   }
 }
 
+init()
