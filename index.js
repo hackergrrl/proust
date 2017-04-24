@@ -2,14 +2,26 @@ var hsl = require('float-hsl2rgb')
 
 window.addEventListener("deviceorientation", handleOrientation, true)
 
+var prevOrientation = null
 function handleOrientation (event) {
   var absolute = event.absolute
-  var alpha    = event.alpha
-  var beta     = event.beta
-  var gamma    = event.gamma
+  var roll     = event.alpha
+  var pitch    = event.beta
+  var yaw      = event.gamma
 
-  console.log(absolute, alpha, beta, gamma)
-  // ...
+  // Convert to relative
+  if (absolute) {
+    if (!prevOrientation) {
+      roll = pitch = yaw = 0
+    } else {
+      roll = roll - prevOrientation[0]
+      pitch = pitch - prevOrientation[1]
+      yaw = yaw - prevOrientation[2]
+    }
+    prevOrientation = [roll, pitch, yaw]
+  }
+
+  console.log(absolute, roll, pitch, yaw)
 }
 
 document.body.style.margin = 0
