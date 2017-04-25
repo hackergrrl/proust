@@ -10,8 +10,8 @@
   "bugs": "https://github.com/noffle/proust/issues",
   "main": "index.js",
   "scripts": {
-    "test": "tape test/*.js",
-    "lint": "standard"
+    "build": "browserify index.js -t brfs > bundle.js",
+    "serve": "ecstatic -p 7000"
   },
   "keywords": [],
   "dependencies": {
