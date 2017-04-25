@@ -2,6 +2,10 @@ var hsl = require('float-hsl2rgb')
 
 var quotes = require('fs').readFileSync('./quotes.txt', 'utf8').split('\n')
 
+var loseSfx = document.createElement('audio')
+document.body.appendChild(loseSfx)
+loseSfx.src = require('./lose_sfx')
+
 window.addEventListener('devicemotion', handleOrientation, true)
 
 var prevOrientation = null
@@ -51,6 +55,7 @@ setInterval(function () {
 function checkLose (force) {
   if (force > 10) {
     document.body.removeChild(canvas)
+    canvas = null
 
     var rgb = hsl([hue, 0.5, 0.75]).map(function (v) { return Math.round(v * 255) })
     document.body.style.background = 'rgb(' + rgb.join(',') + ')'
@@ -62,6 +67,8 @@ function checkLose (force) {
     document.body.appendChild(quote)
 
     document.onclick = init
+
+    loseSfx.play()
   }
 }
 
