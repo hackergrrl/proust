@@ -2,7 +2,7 @@
   "name": "proust",
   "description": "like joust, but with proust quotes",
   "author": "Stephen Whitmore <sww@eight.net>",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "repository": {
     "url": "git://github.com/noffle/proust.git"
   },
