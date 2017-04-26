@@ -1,6 +1,7 @@
 var hsl = require('float-hsl2rgb')
+var path = require('path')
 
-var quotes = require('fs').readFileSync('./quotes.txt', 'utf8').split('\n')
+var quotes = require('fs').readFileSync(path.join(__dirname, 'quotes.txt'), 'utf8').split('\n')
 
 var loseSfx = document.createElement('audio')
 document.body.appendChild(loseSfx)
