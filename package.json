@@ -9,17 +9,21 @@
   "homepage": "https://github.com/noffle/proust",
   "bugs": "https://github.com/noffle/proust/issues",
   "main": "index.js",
+  "bin": {
+    "proust": "serve.js"
+  },
   "scripts": {
     "build": "browserify index.js -t brfs > bundle.js",
     "serve": "ecstatic -p 7000"
   },
   "keywords": [],
   "dependencies": {
-    "float-hsl2rgb": "^1.0.2"
-  },
-  "devDependencies": {
+    "float-hsl2rgb": "^1.0.2",
     "brfs": "^1.4.3",
     "browserify": "^14.1.0"
+  },
+  "devDependencies": {
+    "ecstatic": "^2.1.0"
   },
   "license": "ISC"
 }
